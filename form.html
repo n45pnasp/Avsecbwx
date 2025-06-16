@@ -60,13 +60,13 @@
     const response = document.getElementById("response");
     const idField = document.getElementById("iddata");
 
-    // Generate unique ID (timestamp)
+    // Generate unique ID saat halaman dibuka
     window.onload = () => {
       const uid = "ID" + Date.now();
       idField.value = uid;
     };
 
-    // Update Total Harga secara otomatis
+    // Hitung total harga otomatis
     function updateHarga() {
       const harga = {
         PERTALITE: 10000,
@@ -81,14 +81,14 @@
     bbmSelect.addEventListener("change", updateHarga);
     literInput.addEventListener("input", updateHarga);
 
-    // Submit data ke Google Apps Script
+    // Kirim data ke Apps Script
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
       formData.append("action", "tambah");
 
       try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbxnGgQBHuzEaJrkF9iSmk0FEoEMBLWHtovokNGjLUMyqZu21Crc/exec", {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbydFytVPTg6IXaus6b4A9Hr4GdGlLA44t-OJACXhcRzT3nU6xVzoLHwaqlg8IMJ73Pf/exec", {
           method: "POST",
           body: formData
         });
