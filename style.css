@@ -1,186 +1,73 @@
-/* ===== CLINIK DASHBOARD – STYLE.CSS ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Segoe UI", sans-serif;
-  background: #f0f4f8;
-  color: #333;
-}
-
-/* ===== Container Layout ===== */
-.container {
-  display: flex;
-  min-height: 100vh;
-}
-
-/* ===== Sidebar ===== */
-.sidebar {
-  width: 240px;
-  background: linear-gradient(to bottom, #4979ff, #66a6ff);
-  color: #fff;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.3s ease;
-}
-
-.logo {
-  font-size: 24px;
-  margin-bottom: 30px;
-}
-
-.menu a {
-  color: #fff;
-  text-decoration: none;
-  display: block;
-  padding: 12px 0;
-  opacity: 0.9;
-  transition: 0.2s;
-}
-
-.menu a:hover,
-.menu a.active {
-  font-weight: 700;
-  opacity: 1;
-}
-
-.upgrade-box {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 15px;
-  border-radius: 8px;
-  font-size: 12px;
-}
-
-.upgrade-box button {
-  margin-top: 10px;
-  width: 100%;
-  padding: 8px;
-  border: none;
-  border-radius: 6px;
-  background: #fff;
-  color: #4979ff;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-/* ===== Main Content ===== */
-.main-content {
-  flex: 1;
-  padding: 30px;
-}
-
-.header h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-/* ===== Login Form ===== */
-.form-login {
-  flex: 1;
+/* ===== Login Page Styling (tanpa sidebar) ===== */
+.login-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px;
-  background-color: #f0f4f8;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(to bottom right, #f0f4f8, #e0ebff);
 }
 
-.form-login h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
+.login-container .logo {
+  font-size: 32px;
+  font-weight: bold;
   color: #4979ff;
+  margin-bottom: 20px;
 }
 
-.form-login input {
+.login-container h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.login-container input {
   width: 100%;
   max-width: 320px;
   padding: 12px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
   border-radius: 8px;
+  border: 1px solid #ccc;
   font-size: 16px;
 }
 
-.form-login button {
+.login-container button {
   width: 100%;
   max-width: 320px;
   padding: 12px;
   background-color: #4979ff;
   color: white;
+  font-weight: bold;
+  font-size: 16px;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.form-login button:hover {
+.login-container button:hover {
   background-color: #3867e8;
 }
 
-.form-login #message {
+.login-container #message {
   margin-top: 15px;
   font-size: 14px;
-  color: #d00;
   text-align: center;
+  color: #d32f2f;
 }
 
-/* ===== Hamburger Menu (untuk halaman dashboard) ===== */
-.hamburger {
-  display: none;
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  font-size: 28px;
-  background: #fff;
-  border-radius: 4px;
-  padding: 5px 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  z-index: 9999;
-}
-
-/* ===== Responsive (Mobile < 768px) ===== */
-@media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    left: -260px;
-    top: 0;
-    height: 100%;
-    z-index: 1000;
-    display: flex;
+@media (max-width: 480px) {
+  .login-container {
+    padding: 30px 15px;
   }
 
-  .sidebar.active {
-    left: 0;
+  .login-container .logo {
+    font-size: 28px;
   }
 
-  .hamburger {
-    display: block;
-  }
-
-  .container {
-    flex-direction: column;
-  }
-
-  .main-content {
-    padding: 20px;
-    margin-top: 60px;
-  }
-
-  .form-login {
-    padding: 20px;
+  .login-container input,
+  .login-container button {
+    max-width: 100%;
   }
 }
