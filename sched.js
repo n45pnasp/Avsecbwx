@@ -6,10 +6,28 @@ async function loadScheduleData() {
     const json = JSON.parse(text.substring(47).slice(0, -2));
     const rows = json.table.rows;
 
+    // Ambil Supervisor BHS, Cabin, Landside
+    const supervisorBHS = rows[11]?.c[4]?.v ?? '-';
+    const supervisorCabin = rows[18]?.c[4]?.v ?? '-';
+    const supervisorLandside = rows[27]?.c[4]?.v ?? '-';
+
+    // Buat tampilan supervisor di atas tabel
+    const container = document.getElementById('table-container');
+
+    const supHeader = document.createElement('div');
+    supHeader.innerHTML = `
+      <h3>Supervisor BHS: <strong>${supervisorBHS}</strong></h3>
+      <h3>Supervisor Cabin: <strong>${supervisorCabin}</strong></h3>
+      <h3>Supervisor Landside: <strong>${supervisorLandside}</strong></h3>
+      <br/>
+    `;
+    container.appendChild(supHeader);
+
+    // Buat tabel schedule
     const table = document.createElement('table');
     table.className = 'schedule-table';
 
-    // Header manual (karena kita ambil kolom D-G)
+    // Header
     const thead = document.createElement('thead');
     const headRow = document.createElement('tr');
     ['No', 'Nama Personil', 'Posisi Tugas', 'Keterangan'].forEach(col => {
@@ -20,10 +38,8 @@ async function loadScheduleData() {
     thead.appendChild(headRow);
     table.appendChild(thead);
 
-    // Body
+    // Body: ambil D8:G39 (rows 7–38)
     const tbody = document.createElement('tbody');
-
-    // Ambil hanya baris 8-39 (array index mulai dari 0)
     for (let i = 7; i <= 38; i++) {
       const row = rows[i];
       if (!row) continue;
@@ -35,7 +51,7 @@ async function loadScheduleData() {
       const f = row.c[5]?.v ?? '-'; // kolom F
       const g = row.c[6]?.v ?? '-'; // kolom G
 
-      // deteksi section header (SUPERVISION, POSISI TUGAS, PERSONIL TUGAS)
+      // section header deteksi
       if (!d && e && (
         e.toUpperCase().includes('SUPERVISION') ||
         e.toUpperCase().includes('POSISI TUGAS') ||
@@ -47,7 +63,7 @@ async function loadScheduleData() {
         td.className = 'section-header';
         tr.appendChild(td);
       } else {
-        // isi data baris normal
+        // data biasa
         const cells = [d, e, f, g];
         cells.forEach(cell => {
           const td = document.createElement('td');
@@ -60,7 +76,7 @@ async function loadScheduleData() {
     }
 
     table.appendChild(tbody);
-    document.getElementById('table-container').appendChild(table);
+    container.appendChild(table);
 
   } catch (err) {
     document.getElementById('table-container').innerHTML =
