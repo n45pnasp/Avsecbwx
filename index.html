@@ -1,34 +1,54 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Patients - CLINIK</title>
-  <link rel="stylesheet" href="style.css">
+  <title>CLINIK Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="login.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
 <body>
-  <div class="container">
-    <aside class="sidebar">
-      <h2 class="logo">CLINIK</h2>
-      <nav class="menu">
-        <a href="schedule.html">Schedule</a>
-        <a href="employees.html">Employees</a>
-        <a href="index.html" class="active">Patients</a>
-        <a href="visits.html">Scheduled visits</a>
-        <a href="statistics.html">Statistics</a>
-        <a href="price.html">Price</a>
-        <a href="cabinets.html">Cabinets</a>
-        <a href="settings.html">Settings</a>
-      </nav>
-
-    </aside>
-
-    <main class="main-content">
-      <div class="header"><h1>Patient Profile</h1></div>
-      <div class="content">
-        <p>Ini halaman utama pasien. Masukkan informasi/detail pasien di sini.</p>
-      </div>
-    </main>
+  <div class="login-page">
+    <div class="sidebar">
+      <h1>CLINIK</h1>
+    </div>
+    <div class="form-container">
+      <h2>Login</h2>
+      <input type="email" id="email" placeholder="Email" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="login()">Masuk</button>
+      <p id="message"></p>
+    </div>
   </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCjErIc-wwjIypE8ioTCxjpVod5ZkW_maE",
+      authDomain: "onesignalavsecbwx.firebaseapp.com",
+      projectId: "onesignalavsecbwx",
+      appId: "1:1006902712386:web:c0a9eeb6ad5990744cf5db"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const msg = document.getElementById('message');
+      msg.textContent = "Loading...";
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          msg.textContent = "✅ Login berhasil!";
+          // window.location.href = "dashboard.html";
+        })
+        .catch((error) => {
+          msg.textContent = `❌ ${error.message}`;
+        });
+    }
+  </script>
 </body>
 </html>
