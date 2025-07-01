@@ -1,15 +1,92 @@
 /* ===== CLINIK DASHBOARD – STYLE.CSS ===== */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-body{
-  font-family:"Segoe UI",sans-serif;
-  background:#f0f4f8;
-  color:#333;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f0f4f8;
+  color: #333;
+}
+
+/* ===== Container Layout ===== */
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  width: 240px;
+  background: linear-gradient(to bottom, #4979ff, #66a6ff);
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.logo {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.menu a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  padding: 12px 0;
+  opacity: 0.9;
+  transition: 0.2s;
+}
+
+.menu a:hover,
+.menu a.active {
+  font-weight: 700;
+  opacity: 1;
+}
+
+.upgrade-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.upgrade-box button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background: #fff;
+  color: #4979ff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+  flex: 1;
+  padding: 30px;
+}
+
+.header h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== Login Form ===== */
 .form-login {
   flex: 1;
   display: flex;
@@ -60,88 +137,50 @@ body{
   text-align: center;
 }
 
+/* ===== Hamburger Menu (untuk halaman dashboard) ===== */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-size: 28px;
+  background: #fff;
+  border-radius: 4px;
+  padding: 5px 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 9999;
+}
+
+/* ===== Responsive (Mobile < 768px) ===== */
 @media (max-width: 768px) {
   .sidebar {
-    width: 100%;
-    height: 80px;
-    font-size: 22px;
-    justify-content: center;
+    position: fixed;
+    left: -260px;
+    top: 0;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .hamburger {
+    display: block;
   }
 
   .container {
     flex-direction: column;
   }
 
+  .main-content {
+    padding: 20px;
+    margin-top: 60px;
+  }
+
   .form-login {
     padding: 20px;
   }
-}
-
-.container{
-  display:flex;
-  min-height:100vh;
-}
-.sidebar{
-  width:240px;
-  background:linear-gradient(to bottom,#4979ff,#66a6ff);
-  color:#fff;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-}
-.logo{
-  font-size:24px;
-  margin-bottom:30px;
-}
-.menu a{
-  color:#fff;
-  text-decoration:none;
-  display:block;
-  padding:12px 0;
-  opacity:.9;
-  transition:.2s;
-}
-.menu a:hover,
-.menu a.active{
-  font-weight:700;
-  opacity:1;
-}
-.upgrade-box{
-  background:rgba(255,255,255,.1);
-  padding:15px;
-  border-radius:8px;
-  font-size:12px;
-}
-.upgrade-box button{
-  margin-top:10px;
-  width:100%;
-  padding:8px;
-  border:none;
-  border-radius:6px;
-  background:#fff;
-  color:#4979ff;
-  font-weight:700;
-  cursor:pointer;
-}
-.main-content{
-  flex:1;
-  padding:30px;
-}
-.header h1{
-  font-size:24px;
-  margin-bottom:20px;
-}
-.content{
-  background:#fff;
-  padding:20px;
-  border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,.05);
-}
-
-/* responsif: sembunyikan sidebar di layar <768 px */
-@media(max-width:768px){
-  .sidebar{display:none;}
-  .container{flex-direction:column;}
-  .main-content{padding:20px;}
 }
