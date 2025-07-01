@@ -22,7 +22,7 @@
       <nav class="menu">
         <a href="schedule.html">Schedule</a>
         <a href="employees.html">Employees</a>
-        <a href="dashboard.html">Patients</a>
+        <a href="dashboard.html" class="active">Patients</a>
         <a href="visits.html">Scheduled visits</a>
         <a href="statistics.html">Statistics</a>
         <a href="price.html">Price</a>
@@ -30,7 +30,6 @@
         <a href="settings.html">Settings</a>
       </nav>
 
-      <!-- Upgrade + Logout -->
       <div>
         <div class="upgrade-box">
           <p>Improve your development process with <strong>CLINIK PRO</strong></p>
@@ -52,9 +51,14 @@
   </div>
 
   <!-- Sidebar Logic -->
-  <script src="app.js"></script>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.classList.toggle("active");
+    }
+  </script>
 
-  <!-- Auth & Logout Logic -->
+  <!-- Auth & Logout -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCjErIc-wwjIypE8ioTCxjpVod5ZkW_maE",
@@ -70,7 +74,6 @@
       if (!user) {
         window.location.href = "index.html";
       } else {
-        // Simpan session jika belum ada
         if (!sessionStorage.getItem("user")) {
           sessionStorage.setItem("user", JSON.stringify({
             email: user.email,
