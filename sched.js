@@ -11,9 +11,9 @@ async function loadScheduleData() {
     const supervisorCabin = rows[19]?.c[4]?.v ?? '-';
     const supervisorLandside = rows[28]?.c[4]?.v ?? '-';
 
-    // Personil BHS (13-15)
+    // Personil BHS (11-13)
     const bhsPersonnel = [];
-    for (let i = 12; i <= 14; i++) {
+    for (let i = 10; i <= 12; i++) {
       if (!rows[i]) continue;
       bhsPersonnel.push(extractRow(rows[i]));
     }
