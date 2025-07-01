@@ -7,20 +7,20 @@ async function loadScheduleData() {
     const rows = json.table.rows;
 
     // Ambil Supervisor
-    const supervisorBHS = rows[12]?.c[4]?.v ?? '-';
-    const supervisorCabin = rows[19]?.c[4]?.v ?? '-';
-    const supervisorLandside = rows[28]?.c[4]?.v ?? '-';
+    const supervisorBHS = rows[1]?.c[5]?.v ?? '-';
+    const supervisorCabin = rows[8]?.c[5]?.v ?? '-';
+    const supervisorLandside = rows[17]?.c[5]?.v ?? '-';
 
-    // Personil BHS (11-13)
+    // Personil BHS (row 14-16)
     const bhsPersonnel = [];
-    for (let i = 10; i <= 12; i++) {
+    for (let i = 3; i <= 6; i++) {
       if (!rows[i]) continue;
       bhsPersonnel.push(extractRow(rows[i]));
     }
 
-    // Personil Cabin (21-24)
+    // Personil Cabin (row 21-24)
     const cabinPersonnel = [];
-    for (let i = 20; i <= 23; i++) {
+    for (let i = 10; i <= 13; i++) {
       if (!rows[i]) continue;
       cabinPersonnel.push(extractRow(rows[i]));
     }
@@ -71,7 +71,6 @@ async function loadScheduleData() {
 // Ekstrak data per baris
 function extractRow(row) {
   return {
-    no: row.c[3]?.v ?? '-',
     nama: row.c[4]?.v ?? '-',
     posisi: row.c[5]?.v ?? '-',
     ket: row.c[6]?.v ?? '-'
@@ -85,7 +84,6 @@ function generateTable(data) {
     <table class="schedule-table">
       <thead>
         <tr>
-          <th>No</th>
           <th>Nama Personil</th>
           <th>Posisi Tugas</th>
           <th>Keterangan</th>
@@ -97,7 +95,6 @@ function generateTable(data) {
   data.forEach(item => {
     html += `
       <tr>
-        <td>${item.no}</td>
         <td>${item.nama}</td>
         <td>${item.posisi}</td>
         <td>${item.ket}</td>
