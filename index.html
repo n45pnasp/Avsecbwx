@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CLINIK - Login</title>
   <link rel="stylesheet" href="style.css" />
+
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
@@ -37,14 +38,15 @@
       const button = document.querySelector("button");
 
       msg.textContent = "⏳ Memproses...";
+      msg.className = "";
       button.classList.add("loading");
 
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
           msg.className = "success";
           msg.textContent = "✅ Login berhasil! Mengalihkan...";
+          sessionStorage.setItem("userEmail", email);
           setTimeout(() => {
-            sessionStorage.setItem("userEmail", email);
             window.location.href = "dashboard.html";
           }, 1000);
         })
