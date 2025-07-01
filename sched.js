@@ -1,4 +1,3 @@
-// sched.js
 async function loadScheduleData() {
   const url = 'https://docs.google.com/spreadsheets/d/1Jvh0Ve6GiN9y0djBURZBPToAUmyK2RuYjE-4I-h7Hq0/gviz/tq?sheet=Sheet1';
   try {
@@ -9,60 +8,38 @@ async function loadScheduleData() {
 
     // Ambil Supervisor
     const supervisorBHS = rows[11]?.c[4]?.v ?? '-';
-    const supervisorCabin = rows[18]?.c[4]?.v ?? '-';
-    const supervisorLandside = rows[27]?.c[4]?.v ?? '-';
+    const supervisorCabin = rows[19]?.c[4]?.v ?? '-';
+    const supervisorLandside = rows[28]?.c[4]?.v ?? '-';
 
-    // Persiapan array personil
+    // Personil BHS (13-15)
     const bhsPersonnel = [];
-    const cabinPersonnel = [];
-    const landsidePersonnel = [];
-    const nightPersonnel = [];
-
-    // Data personil SCP BHS (baris 13-15)
     for (let i = 12; i <= 14; i++) {
       if (!rows[i]) continue;
-      bhsPersonnel.push({
-        no: rows[i].c[3]?.v ?? '-',
-        nama: rows[i].c[4]?.v ?? '-',
-        posisi: rows[i].c[5]?.v ?? '-',
-        ket: rows[i].c[6]?.v ?? '-'
-      });
+      bhsPersonnel.push(extractRow(rows[i]));
     }
 
-    // Data personil SCP Cabin (baris 19-23)
-    for (let i = 18; i <= 22; i++) {
+    // Personil Cabin (21-24)
+    const cabinPersonnel = [];
+    for (let i = 20; i <= 23; i++) {
       if (!rows[i]) continue;
-      cabinPersonnel.push({
-        no: rows[i].c[3]?.v ?? '-',
-        nama: rows[i].c[4]?.v ?? '-',
-        posisi: rows[i].c[5]?.v ?? '-',
-        ket: rows[i].c[6]?.v ?? '-'
-      });
+      cabinPersonnel.push(extractRow(rows[i]));
     }
 
-    // Data personil Pos 1, Cargo & Patroli (baris 28-30)
-    for (let i = 27; i <= 29; i++) {
+    // Personil Pos 1, Patroli, Cargo (30-32)
+    const landsidePersonnel = [];
+    for (let i = 29; i <= 31; i++) {
       if (!rows[i]) continue;
-      landsidePersonnel.push({
-        no: rows[i].c[3]?.v ?? '-',
-        nama: rows[i].c[4]?.v ?? '-',
-        posisi: rows[i].c[5]?.v ?? '-',
-        ket: rows[i].c[6]?.v ?? '-'
-      });
+      landsidePersonnel.push(extractRow(rows[i]));
     }
 
-    // Data Dinas Malam (baris 33-36)
-    for (let i = 32; i <= 35; i++) {
+    // Dinas Malam (35-38)
+    const nightPersonnel = [];
+    for (let i = 34; i <= 37; i++) {
       if (!rows[i]) continue;
-      nightPersonnel.push({
-        no: rows[i].c[3]?.v ?? '-',
-        nama: rows[i].c[4]?.v ?? '-',
-        posisi: rows[i].c[5]?.v ?? '-',
-        ket: rows[i].c[6]?.v ?? '-'
-      });
+      nightPersonnel.push(extractRow(rows[i]));
     }
 
-    // Render ke DOM
+    // Render ke halaman
     const container = document.getElementById('table-container');
     container.innerHTML = `
       <div class="supervisor">
@@ -91,10 +68,19 @@ async function loadScheduleData() {
   }
 }
 
-// Fungsi untuk generate tabel HTML dari array data
+// Ekstrak data per baris
+function extractRow(row) {
+  return {
+    no: row.c[3]?.v ?? '-',
+    nama: row.c[4]?.v ?? '-',
+    posisi: row.c[5]?.v ?? '-',
+    ket: row.c[6]?.v ?? '-'
+  };
+}
+
+// Generate tabel HTML
 function generateTable(data) {
   if (!data.length) return '<p>- Tidak ada data -</p>';
-
   let html = `
     <table class="schedule-table">
       <thead>
@@ -119,13 +105,8 @@ function generateTable(data) {
     `;
   });
 
-  html += `
-      </tbody>
-    </table>
-  `;
-
+  html += `</tbody></table>`;
   return html;
 }
 
-// Load saat halaman dibuka
 window.addEventListener('DOMContentLoaded', loadScheduleData);
