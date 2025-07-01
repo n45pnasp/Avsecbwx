@@ -265,6 +265,51 @@ body {
     flex-direction: column;
   }
 
+  /* Style khusus untuk tabel jadwal */
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.schedule-table thead {
+  background-color: #1e3a8a;
+  color: #fff;
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+}
+
+.schedule-table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.section-header {
+  background-color: #0077b6;
+  color: #fff;
+  font-weight: bold;
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.error-msg {
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
   .main-content {
     padding: 20px;
     margin-top: 60px;
