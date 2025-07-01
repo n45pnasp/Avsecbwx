@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CLINIK - Login</title>
   <link rel="stylesheet" href="style.css" />
-
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
 <body>
-  <div class="login-container">
+  <div class="form-login">
     <div class="logo">CLINIK</div>
     <h2>Login</h2>
     <input type="email" id="email" placeholder="Email" />
@@ -21,7 +20,6 @@
   </div>
 
   <script>
-    // Konfigurasi Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCjErIc-wwjIypE8ioTCxjpVod5ZkW_maE",
       authDomain: "onesignalavsecbwx.firebaseapp.com",
@@ -29,47 +27,33 @@
       appId: "1:1006902712386:web:c0a9eeb6ad5990744cf5db"
     };
 
-    // Inisialisasi Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // 🔐 Cek jika user sudah login (auto-redirect)
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        sessionStorage.setItem('user', JSON.stringify({
-          email: user.email,
-          uid: user.uid
-        }));
-        window.location.href = "dashboard.html";
-      }
-    });
-
-    // Fungsi Login
     function login() {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
       const msg = document.getElementById('message');
+      const button = document.querySelector("button");
+
       msg.textContent = "⏳ Memproses...";
+      button.classList.add("loading");
 
       auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-
-          // Simpan user info ke sessionStorage
-          sessionStorage.setItem('user', JSON.stringify({
-            email: user.email,
-            uid: user.uid
-          }));
-
-          msg.style.color = "#4caf50";
+        .then(() => {
+          msg.className = "success";
           msg.textContent = "✅ Login berhasil! Mengalihkan...";
           setTimeout(() => {
+            sessionStorage.setItem("userEmail", email);
             window.location.href = "dashboard.html";
           }, 1000);
         })
         .catch((error) => {
-          msg.style.color = "#d32f2f";
+          msg.className = "error";
           msg.textContent = `❌ ${error.message}`;
+        })
+        .finally(() => {
+          button.classList.remove("loading");
         });
     }
   </script>
