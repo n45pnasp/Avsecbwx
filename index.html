@@ -21,6 +21,7 @@
   </div>
 
   <script>
+    // Konfigurasi Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCjErIc-wwjIypE8ioTCxjpVod5ZkW_maE",
       authDomain: "onesignalavsecbwx.firebaseapp.com",
@@ -28,17 +29,38 @@
       appId: "1:1006902712386:web:c0a9eeb6ad5990744cf5db"
     };
 
+    // Inisialisasi Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
+    // 🔐 Cek jika user sudah login (auto-redirect)
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        sessionStorage.setItem('user', JSON.stringify({
+          email: user.email,
+          uid: user.uid
+        }));
+        window.location.href = "dashboard.html";
+      }
+    });
+
+    // Fungsi Login
     function login() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
       const msg = document.getElementById('message');
       msg.textContent = "⏳ Memproses...";
 
       auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
+        .then((userCredential) => {
+          const user = userCredential.user;
+
+          // Simpan user info ke sessionStorage
+          sessionStorage.setItem('user', JSON.stringify({
+            email: user.email,
+            uid: user.uid
+          }));
+
           msg.style.color = "#4caf50";
           msg.textContent = "✅ Login berhasil! Mengalihkan...";
           setTimeout(() => {
