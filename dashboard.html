@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Patients - CLINIK</title>
+  <title>Dashboard - CLINIK</title>
   <link rel="stylesheet" href="style.css" />
 
   <!-- Firebase SDK -->
@@ -22,7 +22,7 @@
       <nav class="menu">
         <a href="schedule.html">Schedule</a>
         <a href="employees.html">Employees</a>
-        <a href="dashboard.html" class="active">Patients</a>
+        <a href="patients.html">Patients</a>
         <a href="visits.html">Scheduled visits</a>
         <a href="statistics.html">Statistics</a>
         <a href="price.html">Price</a>
@@ -42,15 +42,15 @@
     <!-- Main Content -->
     <main class="main-content">
       <div class="header">
-        <h1>Patient Profile</h1>
+        <h1>Welcome to the Dashboard</h1>
       </div>
       <div class="content">
-        <p>Ini adalah halaman profil pasien. Data pasien bisa ditampilkan di sini.</p>
+        <p>Ini adalah halaman utama setelah login. Silakan pilih menu di samping untuk mulai.</p>
       </div>
     </main>
   </div>
 
-  <!-- Sidebar Logic -->
+  <!-- Sidebar Toggle -->
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
@@ -58,7 +58,7 @@
     }
   </script>
 
-  <!-- Auth & Logout -->
+  <!-- Firebase Auth & Session Check -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCjErIc-wwjIypE8ioTCxjpVod5ZkW_maE",
@@ -84,7 +84,7 @@
     });
 
     function logout() {
-      firebase.auth().signOut().then(() => {
+      auth.signOut().then(() => {
         sessionStorage.clear();
         window.location.href = "index.html";
       });
