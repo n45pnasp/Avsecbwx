@@ -7,14 +7,17 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Hamburger Menu (mobile) -->
   <div class="hamburger" onclick="toggleSidebar()">☰</div>
+
   <div class="container">
+    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
       <h2 class="logo">CLINIK</h2>
       <nav class="menu">
         <a href="schedule.html">Schedule</a>
         <a href="employees.html">Employees</a>
-        <a href="index.html" class="active">Patients</a>
+        <a href="dashboard.html">Patients</a>
         <a href="visits.html">Scheduled visits</a>
         <a href="statistics.html">Statistics</a>
         <a href="price.html">Price</a>
@@ -27,6 +30,7 @@
       </div>
     </aside>
 
+    <!-- Main Content -->
     <main class="main-content">
       <div class="header">
         <h1>Patient Profile</h1>
@@ -37,10 +41,7 @@
     </main>
   </div>
 
-  <script>
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("active");
-    }
-  </script>
+  <!-- Script untuk sidebar & menu aktif -->
+  <script src="app.js"></script>
 </body>
 </html>
