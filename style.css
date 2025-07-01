@@ -1,4 +1,4 @@
-/* ===== RESET ===== */
+/* ===== GLOBAL RESET ===== */
 * {
   margin: 0;
   padding: 0;
@@ -11,13 +11,13 @@ body {
   color: #333;
 }
 
-/* ===== Container Layout ===== */
+/* ===== CONTAINER LAYOUT ===== */
 .container {
   display: flex;
   min-height: 100vh;
 }
 
-/* ===== Sidebar ===== */
+/* ===== SIDEBAR ===== */
 .sidebar {
   width: 240px;
   background: linear-gradient(to bottom, #4979ff, #66a6ff);
@@ -50,6 +50,7 @@ body {
   opacity: 1;
 }
 
+/* ===== UPGRADE BOX ===== */
 .upgrade-box {
   background: rgba(255, 255, 255, 0.1);
   padding: 15px;
@@ -69,7 +70,7 @@ body {
   cursor: pointer;
 }
 
-/* ===== Logout Button ===== */
+/* ===== LOGOUT BUTTON ===== */
 .logout-btn {
   margin-top: 15px;
   width: 100%;
@@ -86,7 +87,7 @@ body {
   background-color: #e53935;
 }
 
-/* ===== Main Content ===== */
+/* ===== MAIN CONTENT ===== */
 .main-content {
   flex: 1;
   padding: 30px;
@@ -104,7 +105,7 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-/* ===== Hamburger Menu ===== */
+/* ===== HAMBURGER MENU (MOBILE) ===== */
 .hamburger {
   display: none;
   position: fixed;
@@ -119,7 +120,130 @@ body {
   z-index: 9999;
 }
 
-/* ===== Responsive for Mobile ===== */
+/* ===== LOGIN PAGE FORM ===== */
+.form-login, .login-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #f0f4f8;
+}
+
+.form-login h2,
+.login-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #4979ff;
+}
+
+.form-login input,
+.login-container input {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.form-login button,
+.login-container button {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px;
+  background-color: #4979ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-login button:hover,
+.login-container button:hover {
+  background-color: #3867e8;
+}
+
+.form-login #message,
+.login-container #message {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ===== SUKSES & ERROR MESSAGE ===== */
+.login-container #message.success {
+  color: #4caf50;
+}
+
+.login-container #message.error {
+  color: #d32f2f;
+}
+
+/* ===== PLACEHOLDER STYLING ===== */
+.login-container input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* ===== INPUT FOCUS ===== */
+.login-container input:focus {
+  outline: none;
+  border-color: #4979ff;
+  box-shadow: 0 0 0 3px rgba(73, 121, 255, 0.2);
+  background-color: #fff;
+}
+
+/* ===== BUTTON LOADING ANIMATION ===== */
+.login-container button.loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.login-container button.loading::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 2px solid #fff;
+  border-top: 2px solid #4979ff;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+/* ===== EXTRA LINKS (OPTIONAL) ===== */
+.login-container .extra-links {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+.login-container .extra-links a {
+  color: #4979ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-container .extra-links a:hover {
+  text-decoration: underline;
+}
+
+/* ===== RESPONSIVE (≤768px) ===== */
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;
@@ -144,5 +268,20 @@ body {
   .main-content {
     padding: 20px;
     margin-top: 60px;
+  }
+
+  .form-login,
+  .login-container {
+    padding: 20px;
+  }
+
+  .login-container h2 {
+    font-size: 20px;
+  }
+
+  .login-container input,
+  .login-container button {
+    font-size: 15px;
+    padding: 10px;
   }
 }
