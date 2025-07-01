@@ -1,73 +1,92 @@
-body {
-  background: linear-gradient(to bottom right, #cfd9df, #e2ebf0);
-  font-family: 'Segoe UI', sans-serif;
+* {
   margin: 0;
   padding: 0;
-}
-
-.container {
-  max-width: 420px;
-  margin: 40px auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-
-h2 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 25px;
-}
-
-h2 i {
-  margin-right: 8px;
-}
-
-label {
-  font-weight: bold;
-  display: block;
-  margin-top: 15px;
-  margin-bottom: 5px;
-  color: #34495e;
-}
-
-input,
-select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
   box-sizing: border-box;
 }
 
-input.readonly {
+body {
+  font-family: Arial, sans-serif;
   background-color: #f7f7f7;
-  border: 1px dashed #ccc;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.profile-info h2 {
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.profile-info p {
+  font-size: 0.9rem;
   color: #666;
 }
 
-button {
-  margin-top: 20px;
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(to right, #007bff, #0056b3);
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 15px;
-  transition: 0.3s ease;
+.menu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
 }
 
-button:hover {
-  background: linear-gradient(to right, #0056b3, #003b80);
-}
-
-.message {
+.menu-item {
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  margin-top: 15px;
-  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.menu-item:hover {
+  transform: scale(1.05);
+}
+
+.menu-item i {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.menu-item span {
+  font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .profile {
+    flex: 1;
+    max-width: 300px;
+  }
+
+  .menu {
+    flex: 2;
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
