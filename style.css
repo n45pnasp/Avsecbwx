@@ -9,6 +9,74 @@ body{
   background:#f0f4f8;
   color:#333;
 }
+
+.form-login {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #f0f4f8;
+}
+
+.form-login h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #4979ff;
+}
+
+.form-login input {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.form-login button {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px;
+  background-color: #4979ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-login button:hover {
+  background-color: #3867e8;
+}
+
+.form-login #message {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #d00;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: 80px;
+    font-size: 22px;
+    justify-content: center;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .form-login {
+    padding: 20px;
+  }
+}
+
 .container{
   display:flex;
   min-height:100vh;
