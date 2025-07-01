@@ -7,9 +7,9 @@ async function loadScheduleData() {
     const rows = json.table.rows;
 
     // Ambil Supervisor
-    const supervisorBHS = rows[1]?.c[5]?.v ?? '-';
-    const supervisorCabin = rows[8]?.c[5]?.v ?? '-';
-    const supervisorLandside = rows[17]?.c[5]?.v ?? '-';
+    const supervisorBHS = rows[1]?.c[4]?.v ?? '-';
+    const supervisorCabin = rows[8]?.c[4]?.v ?? '-';
+    const supervisorLandside = rows[15]?.c[4]?.v ?? '-';
 
     // Personil BHS (row 14-16)
     const bhsPersonnel = [];
