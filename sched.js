@@ -1,3 +1,4 @@
+// sched.js
 async function loadScheduleData() {
   const url = 'https://docs.google.com/spreadsheets/d/1Jvh0Ve6GiN9y0djBURZBPToAUmyK2RuYjE-4I-h7Hq0/gviz/tq?sheet=Sheet1';
   try {
@@ -6,83 +7,125 @@ async function loadScheduleData() {
     const json = JSON.parse(text.substring(47).slice(0, -2));
     const rows = json.table.rows;
 
-    // Ambil Supervisor BHS, Cabin, Landside
+    // Ambil Supervisor
     const supervisorBHS = rows[11]?.c[4]?.v ?? '-';
     const supervisorCabin = rows[18]?.c[4]?.v ?? '-';
     const supervisorLandside = rows[27]?.c[4]?.v ?? '-';
 
-    // Buat tampilan supervisor di atas tabel
-    const container = document.getElementById('table-container');
+    // Persiapan array personil
+    const bhsPersonnel = [];
+    const cabinPersonnel = [];
+    const landsidePersonnel = [];
+    const nightPersonnel = [];
 
-    const supHeader = document.createElement('div');
-    supHeader.innerHTML = `
-      <h3>Supervisor BHS: <strong>${supervisorBHS}</strong></h3>
-      <h3>Supervisor Cabin: <strong>${supervisorCabin}</strong></h3>
-      <h3>Supervisor Landside: <strong>${supervisorLandside}</strong></h3>
-      <br/>
-    `;
-    container.appendChild(supHeader);
-
-    // Buat tabel schedule
-    const table = document.createElement('table');
-    table.className = 'schedule-table';
-
-    // Header
-    const thead = document.createElement('thead');
-    const headRow = document.createElement('tr');
-    ['No', 'Nama Personil', 'Posisi Tugas', 'Keterangan'].forEach(col => {
-      const th = document.createElement('th');
-      th.textContent = col;
-      headRow.appendChild(th);
-    });
-    thead.appendChild(headRow);
-    table.appendChild(thead);
-
-    // Body: ambil D8:G39 (rows 7–38)
-    const tbody = document.createElement('tbody');
-    for (let i = 7; i <= 38; i++) {
-      const row = rows[i];
-      if (!row) continue;
-
-      const tr = document.createElement('tr');
-
-      const d = row.c[3]?.v ?? '-'; // kolom D
-      const e = row.c[4]?.v ?? '-'; // kolom E
-      const f = row.c[5]?.v ?? '-'; // kolom F
-      const g = row.c[6]?.v ?? '-'; // kolom G
-
-      // section header deteksi
-      if (!d && e && (
-        e.toUpperCase().includes('SUPERVISION') ||
-        e.toUpperCase().includes('POSISI TUGAS') ||
-        e.toUpperCase().includes('PERSONIL TUGAS')
-      )) {
-        const td = document.createElement('td');
-        td.colSpan = 4;
-        td.textContent = e;
-        td.className = 'section-header';
-        tr.appendChild(td);
-      } else {
-        // data biasa
-        const cells = [d, e, f, g];
-        cells.forEach(cell => {
-          const td = document.createElement('td');
-          td.textContent = cell;
-          tr.appendChild(td);
-        });
-      }
-
-      tbody.appendChild(tr);
+    // Data personil SCP BHS (baris 13-15)
+    for (let i = 12; i <= 14; i++) {
+      if (!rows[i]) continue;
+      bhsPersonnel.push({
+        no: rows[i].c[3]?.v ?? '-',
+        nama: rows[i].c[4]?.v ?? '-',
+        posisi: rows[i].c[5]?.v ?? '-',
+        ket: rows[i].c[6]?.v ?? '-'
+      });
     }
 
-    table.appendChild(tbody);
-    container.appendChild(table);
+    // Data personil SCP Cabin (baris 19-23)
+    for (let i = 18; i <= 22; i++) {
+      if (!rows[i]) continue;
+      cabinPersonnel.push({
+        no: rows[i].c[3]?.v ?? '-',
+        nama: rows[i].c[4]?.v ?? '-',
+        posisi: rows[i].c[5]?.v ?? '-',
+        ket: rows[i].c[6]?.v ?? '-'
+      });
+    }
+
+    // Data personil Pos 1, Cargo & Patroli (baris 28-30)
+    for (let i = 27; i <= 29; i++) {
+      if (!rows[i]) continue;
+      landsidePersonnel.push({
+        no: rows[i].c[3]?.v ?? '-',
+        nama: rows[i].c[4]?.v ?? '-',
+        posisi: rows[i].c[5]?.v ?? '-',
+        ket: rows[i].c[6]?.v ?? '-'
+      });
+    }
+
+    // Data Dinas Malam (baris 33-36)
+    for (let i = 32; i <= 35; i++) {
+      if (!rows[i]) continue;
+      nightPersonnel.push({
+        no: rows[i].c[3]?.v ?? '-',
+        nama: rows[i].c[4]?.v ?? '-',
+        posisi: rows[i].c[5]?.v ?? '-',
+        ket: rows[i].c[6]?.v ?? '-'
+      });
+    }
+
+    // Render ke DOM
+    const container = document.getElementById('table-container');
+    container.innerHTML = `
+      <div class="supervisor">
+        <p><strong>Supervisor BHS:</strong> ${supervisorBHS}</p>
+        <p><strong>Supervisor Cabin:</strong> ${supervisorCabin}</p>
+        <p><strong>Supervisor Landside:</strong> ${supervisorLandside}</p>
+      </div>
+
+      <h3>Posisi Tugas SCP BHS Domestik</h3>
+      ${generateTable(bhsPersonnel)}
+
+      <h3>Posisi Tugas SCP Cabin Domestik</h3>
+      ${generateTable(cabinPersonnel)}
+
+      <h3>Posisi Tugas Pos 1, Patroli & Cargo</h3>
+      ${generateTable(landsidePersonnel)}
+
+      <h3>Personil Dinas Malam</h3>
+      ${generateTable(nightPersonnel)}
+    `;
 
   } catch (err) {
+    console.error('Gagal load data:', err);
     document.getElementById('table-container').innerHTML =
       '<div class="error-msg">Gagal memuat data dari Google Sheets.</div>';
-    console.error(err);
   }
 }
 
+// Fungsi untuk generate tabel HTML dari array data
+function generateTable(data) {
+  if (!data.length) return '<p>- Tidak ada data -</p>';
+
+  let html = `
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Personil</th>
+          <th>Posisi Tugas</th>
+          <th>Keterangan</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  data.forEach(item => {
+    html += `
+      <tr>
+        <td>${item.no}</td>
+        <td>${item.nama}</td>
+        <td>${item.posisi}</td>
+        <td>${item.ket}</td>
+      </tr>
+    `;
+  });
+
+  html += `
+      </tbody>
+    </table>
+  `;
+
+  return html;
+}
+
+// Load saat halaman dibuka
 window.addEventListener('DOMContentLoaded', loadScheduleData);
