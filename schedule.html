@@ -5,6 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Schedule - CLINIK</title>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Load Google Charts untuk menampilkan spreadsheet -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', { packages: ['table'] });
+    google.charts.setOnLoadCallback(drawTable);
+
+    function drawTable() {
+      var queryString = encodeURIComponent("SELECT *");
+      var query = new google.visualization.Query(
+        'https://docs.google.com/spreadsheets/d/1Jvh0Ve6GiN9y0djBURZBPToAUmyK2RuYjE-4I-h7Hq0/gviz/tq?sheet=Sheet1&headers=1&tq=' + queryString
+      );
+      query.send(function(response) {
+        if (response.isError()) {
+          document.getElementById("table-container").innerHTML =
+            "Gagal memuat data: " + response.getMessage() + " " + response.getDetailedMessage();
+          return;
+        }
+        var data = response.getDataTable();
+        var table = new google.visualization.Table(document.getElementById('table-container'));
+        table.draw(data, { showRowNumber: true, width: '100%', height: 'auto' });
+      });
+    }
+  </script>
 </head>
 <body>
 
@@ -16,14 +40,14 @@
     <aside class="sidebar" id="sidebar">
       <h2 class="logo">CLINIK</h2>
       <nav class="menu">
-        <a href="schedule.html">Schedule</a>
-        <a href="employees.html">Employees</a>
-        <a href="index.html">Patients</a>
-        <a href="visits.html">Scheduled visits</a>
-        <a href="statistics.html">Statistics</a>
-        <a href="price.html">Price</a>
-        <a href="cabinets.html">Cabinets</a>
-        <a href="settings.html">Settings</a>
+        <a href="schedule.html" class="active">Schedule</a>
+        <a href="RandomCheck.html">Random Check</a>
+        <a href="Logbook.html">Logbook</a>
+        <a href="GatePermition.html">Door Gate</a>
+        <a href="KeyMaps.html">Key Maps</a>
+        <a href="DailyCheck.html">Daily Check</a>
+        <a href="Plotting.html">Plotting</a>
+        <a href="settings.html">Setting</a>
       </nav>
       <div class="upgrade-box">
         <p>Improve your development process with <strong>CLINIK PRO</strong></p>
@@ -37,4 +61,16 @@
         <h1>Schedule</h1>
       </div>
       <div class="content">
-        <p>Tampilkan jadwal konsult
+        <p>Tampilkan jadwal konsultasi dan shift dari Google Sheets.</p>
+        <div id="table-container" style="margin-top: 20px;"></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+  </script>
+</body>
+</html>
