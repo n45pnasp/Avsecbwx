@@ -1,42 +1,83 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Profil & Menu</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Patient Profile</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
   <div class="container">
-    <div class="profile">
-      <img src="https://i.pravatar.cc/150?img=3" alt="Foto Profil">
-      <div class="profile-info">
-        <h2>Novan</h2>
-        <p>Web Developer</p>
+    <aside class="sidebar">
+      <h2 class="logo">CLINIK</h2>
+      <nav class="menu">
+        <a href="#"><i class="fas fa-calendar-alt"></i> Schedule</a>
+        <a href="#"><i class="fas fa-user-md"></i> Employees</a>
+        <a class="active" href="#"><i class="fas fa-users"></i> Patients</a>
+        <a href="#"><i class="fas fa-calendar-check"></i> Scheduled visits</a>
+        <a href="#"><i class="fas fa-chart-bar"></i> Statistics</a>
+        <a href="#"><i class="fas fa-file-invoice-dollar"></i> Price</a>
+        <a href="#"><i class="fas fa-clinic-medical"></i> Cabinets</a>
+        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+      </nav>
+      <div class="upgrade-box">
+        <p>Improve your development process <strong>with CLINIK PRO</strong></p>
+        <button>Update to PRO</button>
       </div>
-    </div>
+    </aside>
 
-    <div class="menu">
-      <div class="menu-item">
-        <i class="fas fa-user"></i>
-        <span>Akun</span>
+    <main class="main-content">
+      <div class="header">
+        <h1>Patient profile</h1>
+        <div class="actions">
+          <button class="print">PRINT</button>
+          <button class="edit">EDIT</button>
+          <img src="https://i.pravatar.cc/40?img=5" alt="Profile" class="avatar" />
+        </div>
       </div>
-      <div class="menu-item">
-        <i class="fas fa-cog"></i>
-        <span>Pengaturan</span>
+
+      <div class="profile-grid">
+        <div class="profile-card">
+          <img src="https://i.pravatar.cc/100?img=47" alt="Foto Pasien" class="photo" />
+          <h2>Kate Prokopchuk</h2>
+          <p class="contact">+38 (093) 23 45 678</p>
+          <p class="email">kate@gmail.com</p>
+        </div>
+
+        <div class="info-box">
+          <h3>General Information</h3>
+          <p><strong>Date of birth:</strong> 23.07.1994</p>
+          <p><strong>Address:</strong> Lviv, Chornovola street, 67</p>
+          <p><strong>Registration Date:</strong> Thursday, May 25</p>
+        </div>
+
+        <div class="info-box">
+          <h3>Anamnesis</h3>
+          <p><strong>Allergies:</strong> Nuts, pollen</p>
+          <p><strong>Chronic diseases:</strong> Asthma</p>
+          <p><strong>Blood type:</strong> 1+</p>
+          <p><strong>Past diseases:</strong> Corona virus</p>
+        </div>
+
+        <div class="info-box full">
+          <h3>Files</h3>
+          <ul>
+            <li>Check Up Result.pdf <span class="size">123kb</span></li>
+            <li>Medical Prescriptions.pdf <span class="size">123kb</span></li>
+            <li>Check Up Result.pdf <span class="size">123kb</span></li>
+          </ul>
+        </div>
+
+        <div class="info-box full">
+          <h3>Notes</h3>
+          <ul>
+            <li>Note 31.06.23.pdf</li>
+            <li>Note 23.06.23.pdf</li>
+          </ul>
+        </div>
       </div>
-      <div class="menu-item">
-        <i class="fas fa-bell"></i>
-        <span>Notifikasi</span>
-      </div>
-      <div class="menu-item">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>Keluar</span>
-      </div>
-    </div>
+    </main>
   </div>
-
 </body>
 </html>
