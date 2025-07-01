@@ -1,27 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>CLINIK - Login</title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+  <title>CLINIK - Login</title>
+  <link rel="stylesheet" href="login.css" />
+
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div class="sidebar">
-      <div class="logo">CLINIK</div>
-    </div>
-
-    <div class="form-login">
-      <h2>Login</h2>
-      <input type="email" id="email" placeholder="Email" />
-      <input type="password" id="password" placeholder="Password" />
-      <button onclick="login()">Masuk</button>
-      <p id="message"></p>
-    </div>
+  <div class="login-container">
+    <div class="logo">CLINIK</div>
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Masuk</button>
+    <p id="message"></p>
   </div>
 
   <script>
@@ -39,7 +35,7 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       const msg = document.getElementById('message');
-      msg.textContent = "Loading...";
+      msg.textContent = "⏳ Memproses...";
 
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
@@ -50,7 +46,7 @@
           }, 1000);
         })
         .catch((error) => {
-          msg.style.color = "#d00";
+          msg.style.color = "#d32f2f";
           msg.textContent = `❌ ${error.message}`;
         });
     }
