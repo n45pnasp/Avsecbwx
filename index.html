@@ -2,19 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CLINIK Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="login.css">
+  <title>CLINIK - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
 <body>
-  <div class="login-page">
+  <div class="container">
     <div class="sidebar">
-      <h1>CLINIK</h1>
+      <div class="logo">CLINIK</div>
     </div>
-    <div class="form-container">
+
+    <div class="form-login">
       <h2>Login</h2>
       <input type="email" id="email" placeholder="Email" />
       <input type="password" id="password" placeholder="Password" />
@@ -42,10 +43,14 @@
 
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
-          msg.textContent = "✅ Login berhasil!";
-          // window.location.href = "dashboard.html";
+          msg.style.color = "#4caf50";
+          msg.textContent = "✅ Login berhasil! Mengalihkan...";
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 1000);
         })
         .catch((error) => {
+          msg.style.color = "#d00";
           msg.textContent = `❌ ${error.message}`;
         });
     }
