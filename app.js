@@ -1,24 +1,30 @@
-// === Sidebar Toggle untuk Mobile ===
+// === Toggle Sidebar (mobile) ===
 function toggleSidebar() {
   const sidebar = document.getElementById("sidebar");
+
+  if (!sidebar) return;
+
   sidebar.classList.toggle("active");
 
-  // Tambahan animasi delay jika dibutuhkan
-  if (sidebar.classList.contains("active")) {
-    sidebar.style.transition = "left 0.3s ease-out";
-  } else {
-    sidebar.style.transition = "left 0.2s ease-in";
-  }
+  // Tambahan animasi halus
+  sidebar.style.transition = sidebar.classList.contains("active")
+    ? "left 0.3s ease-out"
+    : "left 0.2s ease-in";
 }
 
-// === Tambahkan class 'active' pada menu sesuai URL ===
+// === Set 'active' class di menu sidebar sesuai halaman ===
 document.addEventListener("DOMContentLoaded", () => {
-  const currentPath = window.location.pathname.split("/").pop();
+  const currentPage = window.location.pathname.split("/").pop();
   const menuLinks = document.querySelectorAll(".menu a");
 
   menuLinks.forEach(link => {
-    const linkHref = link.getAttribute("href");
-    if (linkHref === currentPath || (linkHref === "index.html" && currentPath === "")) {
+    const href = link.getAttribute("href");
+
+    if (
+      href === currentPage || 
+      (currentPage === "" && href.includes("index.html")) ||
+      (currentPage === "dashboard.html" && href.includes("dashboard.html"))
+    ) {
       link.classList.add("active");
     } else {
       link.classList.remove("active");
