@@ -1,72 +1,79 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ===== CLINIK DASHBOARD – STYLE.CSS ===== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f0f4f8;
-  color: #333;
+body{
+  font-family:"Segoe UI",sans-serif;
+  background:#f0f4f8;
+  color:#333;
 }
-.container {
-  display: flex;
-  min-height: 100vh;
+.container{
+  display:flex;
+  min-height:100vh;
 }
-.sidebar {
-  width: 240px;
-  background: linear-gradient(to bottom, #4979ff, #66a6ff);
-  color: white;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.sidebar{
+  width:240px;
+  background:linear-gradient(to bottom,#4979ff,#66a6ff);
+  color:#fff;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
-.logo {
-  font-size: 24px;
-  margin-bottom: 30px;
+.logo{
+  font-size:24px;
+  margin-bottom:30px;
 }
-.menu a {
-  color: white;
-  text-decoration: none;
-  padding: 12px 0;
-  display: block;
-  opacity: 0.9;
-  transition: 0.2s;
+.menu a{
+  color:#fff;
+  text-decoration:none;
+  display:block;
+  padding:12px 0;
+  opacity:.9;
+  transition:.2s;
 }
-.menu a.active,
-.menu a:hover {
-  font-weight: bold;
-  opacity: 1;
+.menu a:hover,
+.menu a.active{
+  font-weight:700;
+  opacity:1;
 }
-.upgrade-box {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 15px;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-top: 20px;
+.upgrade-box{
+  background:rgba(255,255,255,.1);
+  padding:15px;
+  border-radius:8px;
+  font-size:12px;
 }
-.upgrade-box button {
-  margin-top: 10px;
-  padding: 8px;
-  border: none;
-  width: 100%;
-  border-radius: 6px;
-  background: white;
-  color: #4979ff;
-  cursor: pointer;
-  font-weight: bold;
+.upgrade-box button{
+  margin-top:10px;
+  width:100%;
+  padding:8px;
+  border:none;
+  border-radius:6px;
+  background:#fff;
+  color:#4979ff;
+  font-weight:700;
+  cursor:pointer;
 }
-.main-content {
-  flex: 1;
-  padding: 30px;
+.main-content{
+  flex:1;
+  padding:30px;
 }
-.header h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+.header h1{
+  font-size:24px;
+  margin-bottom:20px;
 }
-.content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+.content{
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);
+}
+
+/* responsif: sembunyikan sidebar di layar <768 px */
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .container{flex-direction:column;}
+  .main-content{padding:20px;}
 }
