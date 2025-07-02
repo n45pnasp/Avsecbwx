@@ -10,11 +10,11 @@ async function loadScheduleData() {
       throw new Error("Data kosong atau tidak terbaca.");
     }
 
-    const supervisorBHS = getCellValue(rows, 2, 4);
-    const supervisorCabin = getCellValue(rows, 8, 4);
-    const supervisorLandside = getCellValue(rows, 15, 4);
+    const supervisorBHS = getCellValue(rows, 5, 4);
+    const supervisorCabin = getCellValue(rows, 12, 4); //rows, 8, 4
+    const supervisorLandside = getCellValue(rows, 21, 4); //rows, 15, 4
 
-    const bhsPersonnel = extractRange(rows, 3, 6);
+    const bhsPersonnel = extractRange(rows, 5, 7);
     const cabinPersonnel = extractRange(rows, 10, 13);
     const landsidePersonnel = extractRange(rows, 29, 31);
     const nightPersonnel = extractRange(rows, 34, 37);
@@ -23,9 +23,9 @@ async function loadScheduleData() {
     container.innerHTML = `
       <div class="supervisor">
         <table class="schedule-table">
-          <tr><td><strong>Supervisor BHS</strong></td><td>${supervisorBHS}</td></tr>
-          <tr><td><strong>Supervisor Cabin</strong></td><td>${supervisorCabin}</td></tr>
-          <tr><td><strong>Supervisor Landside</strong></td><td>${supervisorLandside}</td></tr>
+          <tr><td><strong>Supervisor BHS :</strong></td><td>${supervisorBHS}</td></tr>
+          <tr><td><strong>Supervisor Cabin :</strong></td><td>${supervisorCabin}</td></tr>
+          <tr><td><strong>Supervisor Landside :</strong></td><td>${supervisorLandside}</td></tr>
         </table>
       </div>
 
