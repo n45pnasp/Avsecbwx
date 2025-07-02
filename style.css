@@ -121,7 +121,8 @@ body {
 }
 
 /* ===== LOGIN PAGE FORM ===== */
-.form-login, .login-container {
+.form-login,
+.login-container {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -289,7 +290,7 @@ body {
   padding-bottom: 4px;
 }
 
-/* ===== TABEL JADWAL ===== */
+/* ===== TABEL JADWAL KHUSUS (JIKA ADA DI HTML) ===== */
 .schedule-table {
   width: 100%;
   border-collapse: collapse;
@@ -315,6 +316,39 @@ body {
 
 .schedule-table tbody tr:hover {
   background-color: #f0f4ff;
+}
+
+/* ===== TABEL YANG DIHASILKAN OLEH JS (styled-table) ===== */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+}
+
+.styled-table thead {
+  background-color: #4979ff;
+  color: white;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.styled-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #eef4ff;
+  transition: background 0.2s ease-in-out;
 }
 
 /* ===== ERROR MESSAGE ===== */
@@ -351,7 +385,8 @@ body {
     margin-top: 60px;
   }
 
-  .schedule-table {
+  .schedule-table,
+  .styled-table {
     font-size: 13px;
   }
 
