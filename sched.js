@@ -6,10 +6,9 @@ async function loadScheduleData() {
     const text = await response.text();
 
     const rows = text.trim().split('\n');
-    const slicedRows = rows.slice(6, 43); // baris 7–43 (indeks dimulai dari 0)
+    const slicedRows = rows.slice(6, 43); // baris 7–43 (0-based index)
 
     const data = slicedRows.map(row => row.split(','));
-
     renderTable(data);
   } catch (error) {
     document.getElementById('table-container').innerHTML = `<p style="color:red;">Gagal memuat data: ${error.message}</p>`;
@@ -20,7 +19,7 @@ function renderTable(data) {
   const table = document.createElement('table');
   table.classList.add('styled-table');
 
-  // Tabel header (jika baris 7 adalah header)
+  // Header
   const thead = document.createElement('thead');
   const headerRow = document.createElement('tr');
   data[0].forEach(header => {
@@ -31,15 +30,29 @@ function renderTable(data) {
   thead.appendChild(headerRow);
   table.appendChild(thead);
 
-  // Isi tabel
+  // Body
   const tbody = document.createElement('tbody');
+  const colCount = data[0].length;
+
   for (let i = 1; i < data.length; i++) {
     const row = document.createElement('tr');
-    data[i].forEach(cell => {
+
+    // Baris ke-7 (indeks ke-6) dan ke-11 (indeks ke-10) -> gabung sel
+    if (i === 6 || i === 10) {
       const td = document.createElement('td');
-      td.textContent = cell.trim();
+      td.colSpan = colCount;
+      td.textContent = data[i][0].trim(); // ambil isi kolom pertama (biasanya judul)
+      td.style.fontWeight = 'bold';
+      td.style.background = '#e3f2fd';
       row.appendChild(td);
-    });
+    } else {
+      data[i].forEach(cell => {
+        const td = document.createElement('td');
+        td.textContent = cell.trim();
+        row.appendChild(td);
+      });
+    }
+
     tbody.appendChild(row);
   }
 
