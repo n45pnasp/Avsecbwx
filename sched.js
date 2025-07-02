@@ -6,13 +6,13 @@ async function loadScheduleData() {
     const csvText = await res.text();
     const rows = csvText.trim().split('\n').map(row => row.split(','));
 
-    const header = rows[0];
-    const data = rows.slice(1);
+    if (rows.length < 2) {
+      throw new Error('CSV kosong atau tidak sesuai format.');
+    }
 
-    // Ambil tanggal dari baris pertama
-    const tanggal = data[0][0] || '-';
+    const data = rows.slice(1); // Skip header
+    const tanggal = rows[1][0] || '-';
 
-    // Kategorikan data
     const supervisors = {
       bhs: [],
       cabin: [],
@@ -32,17 +32,17 @@ async function loadScheduleData() {
       const posisi = row[3] ?? '-';
       const ket = row[4] ?? '-';
 
+      if (!kategori) return;
+
       if (kategori.includes('supervisor bhs')) supervisors.bhs.push(nama);
       else if (kategori.includes('supervisor cabin')) supervisors.cabin.push(nama);
       else if (kategori.includes('supervisor pos')) supervisors.pos.push(nama);
-
       else if (kategori.includes('personil bhs')) tables.bhs.push({ nama, posisi, ket });
       else if (kategori.includes('personil cabin')) tables.cabin.push({ nama, posisi, ket });
       else if (kategori.includes('personil pos')) tables.pos.push({ nama, posisi, ket });
       else if (kategori.includes('malam')) tables.malam.push({ nama, posisi, ket });
     });
 
-    // Buat HTML
     const container = document.getElementById('table-container');
     container.innerHTML = `
       <div class="tanggal"><strong>Tanggal:</strong> ${tanggal}</div>
@@ -70,13 +70,15 @@ async function loadScheduleData() {
       <h3>Personil Dinas Malam</h3>
       ${generateTable(tables.malam)}
     `;
+
   } catch (error) {
     console.error('Gagal load data CSV:', error);
-    document.getElementById('table-container').innerHTML = '<p class="error-msg">Gagal memuat data jadwal.</p>';
+    document.getElementById('table-container').innerHTML = `
+      <p class="error-msg">Gagal memuat data jadwal. Cek struktur CSV atau koneksi Anda.</p>
+    `;
   }
 }
 
-// Buat tabel HTML dari array data personil
 function generateTable(data) {
   if (!data.length) return '<p>- Tidak ada data -</p>';
   let html = `
