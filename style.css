@@ -243,6 +243,87 @@ body {
   text-decoration: underline;
 }
 
+/* ===== TANGGAL DI ATAS KIRI ===== */
+.tanggal {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1e3a8a;
+}
+
+/* ===== LIST SUPERVISOR ===== */
+.supervisors {
+  margin-bottom: 25px;
+  background: #f8f9fa;
+  padding: 16px;
+  border-left: 4px solid #4979ff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.supervisors h3 {
+  font-size: 16px;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.supervisors ul {
+  list-style: disc;
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.supervisors li {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+/* ===== HEADER TIAP BAGIAN PERSONIL ===== */
+.content h3 {
+  font-size: 18px;
+  color: #1e3a8a;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #4979ff;
+  padding-bottom: 4px;
+}
+
+/* ===== TABEL JADWAL ===== */
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin-bottom: 30px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.schedule-table thead {
+  background-color: #4979ff;
+  color: white;
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e1e1e1;
+  font-size: 14px;
+  text-align: left;
+}
+
+.schedule-table tbody tr:hover {
+  background-color: #f0f4ff;
+}
+
+/* ===== ERROR MESSAGE ===== */
+.error-msg {
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
 /* ===== RESPONSIVE (≤768px) ===== */
 @media (max-width: 768px) {
   .sidebar {
@@ -265,71 +346,26 @@ body {
     flex-direction: column;
   }
 
-  /* Style khusus untuk tabel jadwal */
-
-.schedule-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.schedule-table thead {
-  background-color: #1e3a8a;
-  color: #fff;
-}
-
-.schedule-table th,
-.schedule-table td {
-  padding: 12px 16px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-  font-size: 13px;
-}
-
-.schedule-table tbody tr:hover {
-  background-color: #f1f5f9;
-}
-
-.section-header {
-  background-color: #0077b6;
-  color: #fff;
-  font-weight: bold;
-  text-align: left;
-  padding: 12px 16px;
-  font-size: 14px;
-  border-bottom: 1px solid #eee;
-}
-
-.error-msg {
-  color: red;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
   .main-content {
     padding: 20px;
     margin-top: 60px;
   }
 
   .schedule-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-.schedule-table th, .schedule-table td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-}
-.schedule-table th {
-  background-color: #f4f4f4;
-}
+    font-size: 13px;
+  }
 
-  
+  .supervisors,
+  .schedule-table,
+  .tanggal {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .content h3 {
+    font-size: 16px;
+  }
+
   .form-login,
   .login-container {
     padding: 20px;
