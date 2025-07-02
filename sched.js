@@ -6,7 +6,7 @@ async function loadScheduleData() {
     const text = await response.text();
 
     const rows = text.trim().split('\n');
-    const slicedRows = rows.slice(6, 43); // baris 7–43 (0-based index)
+    const slicedRows = rows.slice(6, 43); // Ambil baris 7–43 (0-based)
 
     const data = slicedRows.map(row => row.split(','));
     renderTable(data);
@@ -19,10 +19,11 @@ function renderTable(data) {
   const table = document.createElement('table');
   table.classList.add('styled-table');
 
-  // Header
+  // Header diambil dari baris pertama (anggap baris ke-7 adalah judul, bukan header)
   const thead = document.createElement('thead');
   const headerRow = document.createElement('tr');
-  data[0].forEach(header => {
+  const headerData = data.find(row => row.length > 2); // cari baris dengan isi tabel biasa
+  headerData.forEach(header => {
     const th = document.createElement('th');
     th.textContent = header.trim();
     headerRow.appendChild(th);
@@ -32,20 +33,23 @@ function renderTable(data) {
 
   // Body
   const tbody = document.createElement('tbody');
-  const colCount = data[0].length;
+  const colCount = headerData.length;
 
-  for (let i = 1; i < data.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     const row = document.createElement('tr');
 
-    // Baris ke-7 (indeks ke-6) dan ke-11 (indeks ke-10) -> gabung sel
-    if (i === 6 || i === 10) {
+    // Baris ke-7 (index 0-based = 6) dan ke-11 (index 10)
+    if (i === 0 || i === 4) {
       const td = document.createElement('td');
       td.colSpan = colCount;
-      td.textContent = data[i][0].trim(); // ambil isi kolom pertama (biasanya judul)
+      td.textContent = data[i][0].trim(); // ambil isi kolom pertama
       td.style.fontWeight = 'bold';
-      td.style.background = '#e3f2fd';
+      td.style.backgroundColor = '#e3f2fd';
+      td.style.textAlign = 'center';
+      td.style.color = '#1e3a8a';
       row.appendChild(td);
     } else {
+      // Baris normal
       data[i].forEach(cell => {
         const td = document.createElement('td');
         td.textContent = cell.trim();
