@@ -10,7 +10,7 @@ async function loadScheduleData() {
       throw new Error("Data kosong atau tidak terbaca.");
     }
 
-    const supervisorBHS = getCellValue(rows, 1, 4);
+    const supervisorBHS = getCellValue(rows, 2, 4);
     const supervisorCabin = getCellValue(rows, 8, 4);
     const supervisorLandside = getCellValue(rows, 15, 4);
 
