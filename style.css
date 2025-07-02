@@ -315,6 +315,21 @@ body {
     margin-top: 60px;
   }
 
+  .schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.schedule-table th, .schedule-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+.schedule-table th {
+  background-color: #f4f4f4;
+}
+
+  
   .form-login,
   .login-container {
     padding: 20px;
