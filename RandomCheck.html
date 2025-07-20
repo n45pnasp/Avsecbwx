@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Check - AVSEC BWX</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="hamburger" onclick="toggleSidebar()">☰</div>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <h2 class="logo">CLINIK</h2>
+      <nav class="menu">
+        <a href="schedule.html">Schedule</a>
+        <a href="RandomCheck.html" class="active">Random Check</a>
+        <a href="Logbook.html">Logbook</a>
+        <a href="GatePermition.html">Door Gate</a>
+        <a href="KeyMaps.html">Key Maps</a>
+        <a href="DailyCheck.html">Daily Check</a>
+        <a href="Plotting.html">Plotting</a>
+        <a href="settings.html">Setting</a>
+      </nav>
+      <div class="upgrade-box">
+        <p>Terima kasih telah menggunakan <strong>AVSEC BWX</strong></p>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="header">
+        <h1>Random Check</h1>
+      </div>
+
+      <div class="content">
+        <div class="btn-group">
+          <button onclick="showForm('Cabin')">Random Cabin</button>
+          <button onclick="showForm('HBS')">Random HBS</button>
+          <button onclick="showForm('Cargo')">Random Cargo</button>
+        </div>
+
+        <form id="randomForm" onsubmit="submitForm(event)">
+          <input type="hidden" id="kategori" name="kategori" />
+          <input type="text" id="nama" placeholder="Nama Penumpang" required />
+
+          <select id="flight" required>
+            <option value="" disabled selected>Pilih Flight</option>
+            <option value="GA123">GA123</option>
+            <option value="JT456">JT456</option>
+            <option value="ID789">ID789</option>
+          </select>
+
+          <select id="objek" required>
+            <option value="" disabled selected>Pilih Objek Pemeriksaan</option>
+            <option value="Badan">Badan</option>
+            <option value="Bagasi">Bagasi</option>
+            <option value="Barang Bawaan">Barang Bawaan</option>
+          </select>
+
+          <select id="metode" required>
+            <option value="" disabled selected>Pilih Metode Pemeriksaan</option>
+            <option value="Manual">Manual</option>
+            <option value="ETD">ETD</option>
+            <option value="X-Ray">X-Ray</option>
+          </select>
+
+          <button type="submit">Save Data</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <!-- Firebase Auth & Logic -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCjErIc-wwjIypE8ioTCxjpVod5ZkW_maE",
+      authDomain: "onesignalavsecbwx.firebaseapp.com",
+      projectId: "onesignalavsecbwx",
+      appId: "1:1006902712386:web:c0a9eeb6ad5990744cf5db"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        window.location.href = "index.html";
+      } else {
+        if (!sessionStorage.getItem("user")) {
+          sessionStorage.setItem("user", JSON.stringify({
+            email: user.email,
+            uid: user.uid
+          }));
+        }
+      }
+    });
+
+    function logout() {
+      auth.signOut().then(() => {
+        sessionStorage.clear();
+        window.location.href = "index.html";
+      });
+    }
+
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+
+    function showForm(kategori) {
+      document.getElementById("randomForm").style.display = "flex";
+      document.getElementById("kategori").value = kategori;
+    }
+
+    async function submitForm(event) {
+      event.preventDefault();
+
+      const data = {
+        kategori: document.getElementById("kategori").value,
+        nama: document.getElementById("nama").value,
+        flight: document.getElementById("flight").value,
+        objek: document.getElementById("objek").value,
+        metode: document.getElementById("metode").value,
+        timestamp: new Date().toLocaleString()
+      };
+
+      try {
+        await fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+
+        alert("Data berhasil disimpan!");
+        document.getElementById("randomForm").reset();
+        document.getElementById("randomForm").style.display = "none";
+      } catch (error) {
+        alert("Gagal mengirim data!");
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
