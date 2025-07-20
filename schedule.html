@@ -32,8 +32,8 @@
         <a href="settings.html">Setting</a>
       </nav>
       <div class="upgrade-box">
-        <p>Improve your development process with <strong>CLINIK PRO</strong></p>
-        <button>Update to PRO</button>
+        <p>Terima kasih telah menggunakan <strong>AVSEC BWX</strong></p>
+        <button onclick="logout()">Logout</button>
       </div>
     </aside>
 
@@ -44,7 +44,7 @@
       </div>
 
       <div class="content">
-        <p>Data jadwal konsultasi dan shift ditampilkan langsung dari Google Sheets.</p>
+        <p>Jadwal shift ditampilkan langsung dari Google Sheets.</p>
         <div id="table-container">
           <iframe 
             src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQRMLp8YZ6z0bDSErm7ExaAg9z7LturHHz4ZE4ULMXZlxi2yeyNuiEOC0PylKtPoSIiR6qb5VJ6jeel/pubhtml">
@@ -54,7 +54,42 @@
     </main>
   </div>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <!-- Firebase Auth & Session Check -->
   <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCjErIc-wwjIypE8ioTCxjpVod5ZkW_maE",
+      authDomain: "onesignalavsecbwx.firebaseapp.com",
+      projectId: "onesignalavsecbwx",
+      appId: "1:1006902712386:web:c0a9eeb6ad5990744cf5db"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        window.location.href = "index.html"; // Redirect kalau belum login
+      } else {
+        if (!sessionStorage.getItem("user")) {
+          sessionStorage.setItem("user", JSON.stringify({
+            email: user.email,
+            uid: user.uid
+          }));
+        }
+      }
+    });
+
+    function logout() {
+      auth.signOut().then(() => {
+        sessionStorage.clear();
+        window.location.href = "index.html"; // Redirect ke login
+      });
+    }
+
     function toggleSidebar() {
       document.getElementById("sidebar").classList.toggle("active");
     }
