@@ -37,14 +37,15 @@
       </div>
 
       <div class="content">
-        <div class="btn-group">
-          <button onclick="showForm('Cabin')">Random Cabin</button>
-          <button onclick="showForm('HBS')">Random HBS</button>
-          <button onclick="showForm('Cargo')">Random Cargo</button>
-        </div>
+        <form id="randomForm" onsubmit="submitForm(event)">
+          <label for="kategori">Kategori Pemeriksaan</label>
+          <select id="kategori" required>
+            <option value="" disabled selected>Pilih Kategori</option>
+            <option value="Cabin">Cabin</option>
+            <option value="HBS">HBS</option>
+            <option value="Cargo">Cargo</option>
+          </select>
 
-        <form id="randomForm" style="display: none;" onsubmit="submitForm(event)">
-          <input type="hidden" id="kategori" name="kategori" />
           <input type="text" id="nama" placeholder="Nama Penumpang" required />
 
           <select id="flight" required>
