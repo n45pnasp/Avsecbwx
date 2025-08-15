@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Lookup Kode Register</title>
+  <meta name="theme-color" content="#0b1220" />
+  <style>
+    :root{
+      --bg:#0b1220; --panel:#111827; --card:#1f2937;
+      --text:#e5e7eb; --muted:#94a3b8; --border:rgba(255,255,255,.1);
+      --accent:#3b82f6; --accent-2:#2563eb; --ok:#16a34a; --danger:#dc2626;
+      --radius:18px; --shadow:0 12px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; padding:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;}
+    .wrap{max-width:980px; margin:0 auto; padding:24px}
+    h1{margin:0 0 16px; font-size:22px; font-weight:700}
+    .search-bar{
+      display:flex; gap:10px; align-items:center; background:var(--panel);
+      padding:12px; border:1px solid var(--border); border-radius:var(--radius);
+      position:sticky; top:0; z-index:20; backdrop-filter: blur(6px);
+    }
+    .search-bar input{
+      flex:1; background:#0e1627; color:var(--text); border:1px solid var(--border);
+      border-radius:12px; padding:12px 14px; outline:none; font-size:16px;
+      text-transform:uppercase;
+    }
+    .btn{
+      height:44px; padding:0 16px; border-radius:12px; border:1px solid transparent;
+      background:var(--accent); color:#fff; font-weight:600; cursor:pointer;
+      transition:.15s; box-shadow: var(--shadow);
+    }
+    .btn:hover{ background:var(--accent-2) }
+    .btn.secondary{ background:transparent; border-color:var(--border); color:var(--text); box-shadow:none }
+    .btn.ghost{ background:transparent; border-color:transparent; color:var(--muted); box-shadow:none }
+    .status{ margin-left:8px; font-size:14px; color:var(--muted) }
+    .card{
+      margin-top:16px; background:linear-gradient(180deg, var(--panel), var(--card));
+      border:1px solid var(--border); border-radius:var(--radius); padding:16px;
+      box-shadow: var(--shadow);
+    }
+    .grid{
+      display:grid; gap:12px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 780px){
+      .grid{ grid-template-columns: 1.2fr .8fr; }
+    }
+    .kv{ display:grid; grid-template-columns: 190px 1fr; gap:6px 12px; }
+    .kv .k{ color:var(--muted) }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      height:28px; padding:0 10px; border-radius:999px;
+      font-size:13px; font-weight:700; letter-spacing:.2px;
+      border:1px solid var(--border);
+    }
+    .badge.ok{ background:rgba(22,163,74,.15); color:#b8f7c9; border-color:rgba(22,163,74,.35) }
+    .badge.danger{ background:rgba(220,38,38,.15); color:#ffc4c4; border-color:rgba(220,38,38,.35) }
+    .imgbox{
+      background:#0b1324; border:1px dashed var(--border); border-radius:12px;
+      display:flex; align-items:center; justify-content:center; min-height:260px; overflow:hidden;
+    }
+    .imgbox img{ width:100%; height:100%; object-fit:cover }
+    .toolbar{ display:flex; gap:8px; justify-content:flex-end; margin-top:12px }
+    .muted{ color:var(--muted) }
+    .err{ color:#ffcdd2 }
+    .jsonbox{
+      margin-top:12px; background:#0e1627; color:#d1fae5; border:1px solid var(--border);
+      padding:12px; border-radius:12px; overflow:auto; max-height:260px; font-size:13px;
+      white-space:pre-wrap; word-break:break-word;
+    }
+    a.link{ color:#93c5fd; text-decoration:none; border-bottom:1px dashed rgba(147,197,253,.35) }
+    a.link:hover{ border-bottom-color: rgba(147,197,253,.8) }
+    .sr{ position:absolute; left:-9999px }
+    .footer{ margin:24px 0 8px; text-align:center; color:var(--muted); font-size:12px }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Lookup Kode Register</h1>
+
+    <div class="search-bar">
+      <label class="sr" for="kode">Kode Register</label>
+      <input id="kode" placeholder="Ketik Kode Register, mis. KPBWX00001K" autocomplete="off" />
+      <button id="btnCari" class="btn">Cari</button>
+      <button id="btnReset" class="btn secondary">Reset</button>
+      <span id="status" class="status"></span>
+    </div>
+
+    <div id="result" class="card" style="display:none">
+      <div class="grid">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px">
+            <div id="badge" class="badge">STATUS</div>
+            <div class="muted" id="tgl"></div>
+          </div>
+
+          <div class="kv">
+            <div class="k">Kode Register</div><div id="outKode">-</div>
+            <div class="k">Nama Lengkap</div><div id="outNama">-</div>
+            <div class="k">Warna Pas</div><div id="outWarna">-</div>
+            <div class="k">Kode Area</div><div id="outArea">-</div>
+            <div class="k">Instansi</div><div id="outInstansi">-</div>
+            <div class="k">Pekerjaan</div><div id="outKerja">-</div>
+            <div class="k">Masa Berlaku</div><div id="outMasa">-</div>
+            <div class="k">Fungsi</div><div id="outFungsi">-</div>
+          </div>
+
+          <div class="toolbar">
+            <button id="btnPrint" class="btn secondary">Cetak</button>
+            <button id="btnCopy" class="btn secondary">Salin JSON</button>
+          </div>
+
+          <div id="json" class="jsonbox" aria-live="polite"></div>
+        </div>
+
+        <div>
+          <div class="imgbox" id="imgbox">
+            <span class="muted">Tidak ada gambar</span>
+          </div>
+          <div class="toolbar">
+            <a id="openImg" class="btn ghost link" href="#" target="_blank" rel="noopener" style="display:none">Buka gambar asli ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="footer">© <span id="yr"></span> Lookup — GitHub Pages</p>
+  </div>
+
+  <script>
+    // ====== KONFIGURASI BACKEND ======
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxKUAmLUdzZeqK0NjSLQxXmfNCbjYINGU4CBHr6KMATWdVMRq6e4xEV0x2S1-58wXM/exec';
+
+    // ====== ELEMEN ======
+    const $ = (s, el = document) => el.querySelector(s);
+    const kodeInput = $('#kode');
+    const btnCari   = $('#btnCari');
+    const btnReset  = $('#btnReset');
+    const statusEl  = $('#status');
+    const card      = $('#result');
+    const badge     = $('#badge');
+    const tglNow    = $('#tgl');
+    const yr        = $('#yr');
+    yr.textContent = new Date().getFullYear();
+
+    // Output fields
+    const out = {
+      kode: $('#outKode'),
+      nama: $('#outNama'),
+      warna: $('#outWarna'),
+      area: $('#outArea'),
+      instansi: $('#outInstansi'),
+      kerja: $('#outKerja'),
+      masa: $('#outMasa'),
+      fungsi: $('#outFungsi'),
+      json: $('#json'),
+      imgbox: $('#imgbox'),
+      openImg: $('#openImg'),
+    };
+
+    // ====== UTIL ======
+    function setStatus(msg, type='muted'){
+      statusEl.textContent = msg || '';
+      statusEl.className = 'status' + (type==='err' ? ' err' : '');
+    }
+    function setBadge(stateText){
+      const text = String(stateText || '').toUpperCase();
+      badge.textContent = text || '—';
+      badge.className = 'badge ' + (text.includes('HIDUP') ? 'ok' : text.includes('MATI') ? 'danger' : '');
+    }
+    function clean(s){ return (s==null || s===undefined) ? '' : String(s); }
+    function toUpperNoSpace(e){ e.target.value = e.target.value.toUpperCase().trimStart(); }
+
+    function renderImage(url){
+      out.imgbox.innerHTML = '';
+      if (!url){
+        out.imgbox.innerHTML = '<span class="muted">Tidak ada gambar</span>';
+        out.openImg.style.display = 'none';
+        out.openImg.href = '#';
+        return;
+      }
+      const img = new Image();
+      img.referrerPolicy = 'no-referrer';
+      img.alt = 'Foto';
+      img.onload = () => {};
+      img.onerror = () => { out.imgbox.innerHTML = '<span class="muted">Gagal memuat gambar</span>'; };
+      img.src = url;
+      out.imgbox.appendChild(img);
+      out.openImg.style.display = 'inline-flex';
+      out.openImg.href = url;
+    }
+
+    function renderData(d){
+      out.kode.textContent    = clean(d['Kode Register']);
+      out.nama.textContent    = clean(d['Nama Lengkap']);
+      out.warna.textContent   = clean(d['Warna Pas']);
+      out.area.textContent    = clean(d['Kode Area']);
+      out.instansi.textContent= clean(d['Instansi']);
+      out.kerja.textContent   = clean(d['Pekerjaan']);
+      out.masa.textContent    = clean(d['Masa Berlaku']);
+      out.fungsi.textContent  = clean(d['Fungsi']);
+
+      setBadge(d['Masa Berlaku (Hidup/Mati)']);
+      tglNow.textContent = 'Tgl Sekarang: ' + clean(d['Tgl Sekarang']);
+
+      renderImage(clean(d['URL Gambar']));
+
+      const pretty = JSON.stringify(d, null, 2);
+      out.json.textContent = pretty;
+
+      card.style.display = 'block';
+    }
+
+    async function fetchKode(kode){
+      setStatus('Mengambil data…');
+      card.style.display = 'none';
+      try{
+        const url = `${SCRIPT_URL}?kode_register=${encodeURIComponent(kode)}`;
+        const res = await fetch(url, { cache:'no-store' });
+        if (!res.ok){
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const json = await res.json();
+        if (!json.success){
+          throw new Error(json.error || 'Gagal mengambil data');
+        }
+        renderData(json.data || {});
+        setStatus('Selesai');
+      } catch(err){
+        setStatus('Error: ' + err.message, 'err');
+      }
+    }
+
+    // ====== EVENTS ======
+    btnCari.addEventListener('click', () => {
+      const kode = kodeInput.value.trim().toUpperCase();
+      if (!kode){ setStatus('Ketik Kode Register dulu', 'err'); return; }
+      fetchKode(kode);
+    });
+    btnReset.addEventListener('click', () => {
+      kodeInput.value = '';
+      setStatus('');
+      card.style.display = 'none';
+    });
+    kodeInput.addEventListener('input', toUpperNoSpace);
+    kodeInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') btnCari.click();
+    });
+
+    $('#btnCopy').addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(out.json.textContent || '');
+        setStatus('JSON disalin ✓');
+      } catch { setStatus('Gagal menyalin JSON', 'err'); }
+    });
+    $('#btnPrint').addEventListener('click', () => { window.print(); });
+
+    // ====== AUTO-FETCH VIA QUERY PARAM ======
+    (function initFromURL(){
+      const p = new URLSearchParams(location.search);
+      const kode = (p.get('kode') || '').toUpperCase();
+      if (kode){
+        kodeInput.value = kode;
+        fetchKode(kode);
+      }
+    })();
+  </script>
+</body>
+</html>
